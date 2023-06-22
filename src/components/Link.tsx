@@ -1,6 +1,26 @@
 import { FC } from "react";
 import { AUTH_TOKEN } from "../constants";
 import { timeDifferenceForDate } from "../utils";
+import { gql, useMutation } from "@apollo/client";
+
+const VOTE_MUTATION = gql`
+  mutation VoteMutation($linkId: ID!) {
+    vote(linkId: $linkId) {
+      id
+      link {
+        votes {
+          id
+          user {
+            id
+          }
+        }
+      }
+      user {
+        id
+      }
+    }
+  }
+`;
 
 interface LinkProps {
   link: {
@@ -17,6 +37,12 @@ interface LinkProps {
 
 const Link: FC<LinkProps> = ({ link, index }) => {
   const authToken = localStorage.getItem(AUTH_TOKEN);
+  const [vote] = useMutation(VOTE_MUTATION, {
+    variables: {
+      linkId: link.id,
+    },
+  });
+
   return (
     <div className="flex mt2 items-start">
       <div className="flex items-center">
@@ -25,9 +51,7 @@ const Link: FC<LinkProps> = ({ link, index }) => {
           <div
             className="ml1 gray f11"
             style={{ cursor: "pointer" }}
-            onClick={() => {
-              console.log("Clicked vote button");
-            }}
+            onClick={() => vote()}
           >
             ▲
           </div>
