@@ -1,3 +1,5 @@
+// Desc: Utility functions
+// Date function to convert time to human readable format
 function timeDifference(current: any, previous: any) {
   const milliSecondsPerMinute = 60 * 1000;
   const milliSecondsPerHour = milliSecondsPerMinute * 60;
