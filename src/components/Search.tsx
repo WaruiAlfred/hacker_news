@@ -3,7 +3,7 @@ import { useLazyQuery, gql } from "@apollo/client";
 import Link from "./Link";
 
 const Search = () => {
-  const [searchFilter, setSearchFilter] = useState("");
+  const [searchFilter, setSearchFilter] = useState<string>("");
   return (
     <>
       <div>
